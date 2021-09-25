@@ -225,6 +225,7 @@ set(test_src
     UnitHeater.unit.cc
     UnitVentilator.unit.cc
     UtilityRoutines.unit.cc
+    UserDefinedComponents.unit.cc
     VariableSpeedCoils.unit.cc
     VAVDefMinMaxFlow.unit.cc
     Vectors.unit.cc
