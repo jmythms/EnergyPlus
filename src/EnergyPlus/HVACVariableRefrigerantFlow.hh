@@ -126,11 +126,15 @@ namespace HVACVariableRefrigerantFlow {
     };
 
     // Flag for VRF operational mode
-    constexpr int ModeCoolingOnly = 1;       // Flag for Cooling Only Mode [-]
-    constexpr int ModeHeatingOnly = 2;       // Flag for Heating Only Mode [-]
-    constexpr int ModeCoolingAndHeating = 3; // Flag for Simultaneous Cooling and Heating Only Mode [-]
+    enum VrfOpMode {
+        Invalid = 0,
+        CoolingOnly,       // Flag for Cooling Only Mode [-]
+        HeatingOnly,       // Flag for Heating Only Mode [-]
+        CoolingAndHeating, // Flag for Simultaneous Cooling and Heating Only Mode [-]
+        Num
+    };
 
-    // Subroutine Specifications for the Module
+        // Subroutine Specifications for the Module
     struct VRFCondenserEquipment : PlantComponent
     {
         // Members
@@ -226,7 +230,7 @@ namespace HVACVariableRefrigerantFlow {
         Real64 EvapCondPumpPower;                           // evaporative condenser water pump power (W)
         int CoolCombRatioPTR;                               // index to cooling combination ratio curve pointer
         int HeatCombRatioPTR;                               // index to heating combination ratio curve pointer
-        int OperatingMode;                                  // VRF Condenser operating mode, 0=off, 1=cooling, 2=heating, 3=HR
+        VrfOpMode OperatingMode;                                  // VRF Condenser operating mode, 0=off, 1=cooling, 2=heating, 3=HR
         Real64 ElecPower;                                   // VRF Condenser power (W)
         Real64 ElecCoolingPower;                            // VRF Condenser power in cooling mode (W)
         Real64 ElecHeatingPower;                            // VRF Condenser power in heating mode (W)
@@ -387,7 +391,7 @@ namespace HVACVariableRefrigerantFlow {
               DefrostControl(StandardRatings::HPdefrostControl::Invalid), DefrostCapacity(0.0), DefrostPower(0.0), DefrostConsumption(0.0),
               MaxOATDefrost(0.0), CondenserType(DataHeatBalance::RefrigCondenserType::Invalid), CondenserNodeNum(0), SkipCondenserNodeNumCheck(false),
               CondenserOutletNodeNum(0), WaterCondVolFlowRate(0.0), EvapCondEffectiveness(0.0), EvapCondAirVolFlowRate(0.0), EvapCondPumpPower(0.0),
-              CoolCombRatioPTR(0), HeatCombRatioPTR(0), OperatingMode(0), ElecPower(0.0), ElecCoolingPower(0.0), ElecHeatingPower(0.0),
+              CoolCombRatioPTR(0), HeatCombRatioPTR(0), OperatingMode(VrfOpMode::Invalid), ElecPower(0.0), ElecCoolingPower(0.0), ElecHeatingPower(0.0),
               CoolElecConsumption(0.0), HeatElecConsumption(0.0), CrankCaseHeaterPower(0.0), CrankCaseHeaterElecConsumption(0.0),
               EvapCondPumpElecPower(0.0), EvapCondPumpElecConsumption(0.0), EvapWaterConsumpRate(0.0), HRMaxTempLimitIndex(0),
               CoolingMaxTempLimitIndex(0), HeatingMaxTempLimitIndex(0), FuelTypeNum(DataGlobalConstants::ResourceType::None), SUMultiplier(0.0),
